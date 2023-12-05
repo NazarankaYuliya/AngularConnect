@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  register() {
+    console.log('you are registered!');
+  }
 
-  constructor() { }
+  login() {
+    console.log('you are logged in!');
+  }
 }
