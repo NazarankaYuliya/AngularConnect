@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "youtube-client-app": {
+    "connect-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
