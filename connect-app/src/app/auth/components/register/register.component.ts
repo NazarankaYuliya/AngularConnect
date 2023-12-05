@@ -41,7 +41,7 @@ export class RegisterComponent {
       const registrationData: RegistrationData = this.registrationForm.value;
 
       this.authService.register(registrationData).subscribe(() => {
-        console.log('Registration successful');
+        this.authService.showSuccessToast('Registration successful');
         this.router.navigate(['/signin']);
       });
     }

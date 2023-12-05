@@ -15,7 +15,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private registrationService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -28,11 +28,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const loginData: LoginData = this.loginForm.value;
 
-      this.registrationService
-        .login(loginData)
-        .subscribe((response: LoginResponse) => {
-          console.log('Login successful:', response);
-        });
+      this.authService.login(loginData).subscribe((response: LoginResponse) => {
+        this.authService.showSuccessToast('You are logged in');
+      });
     }
   }
 }
