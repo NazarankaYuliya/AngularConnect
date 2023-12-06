@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, Observable, tap } from 'rxjs';
 import {
   LoginData,
   LoginResponse,
   RegistrationData,
 } from 'src/app/models/models';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   handleLoginError,
   handleRegisterError,

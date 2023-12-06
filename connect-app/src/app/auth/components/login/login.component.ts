@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginData, LoginResponse } from 'src/app/models/models';
+import { LoginData } from 'src/app/models/models';
 
 import { AuthService } from '../../services/auth.service';
 
@@ -28,7 +28,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const loginData: LoginData = this.loginForm.value;
 
-      this.authService.login(loginData).subscribe((response: LoginResponse) => {
+      this.authService.login(loginData).subscribe(() => {
         this.authService.showSuccessToast('You are logged in');
       });
     }
