@@ -1,0 +1,15 @@
+<div>
+    <button mat-button (click)="updateList()" [disabled]="updateCountdown > 0">
+        Update
+        <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+    </button>
+    <button mat-button (click)="createGroup()">Create</button>
+</div>
+
+<ul>
+    <li *ngFor="let group of groups">
+        {{ group.name }}
+        <button mat-icon-button color="warn" *ngIf="group.createdBy === userId" (click)="deleteGroup(group.id)">delete
+        </button>
+    </li>
+</ul>

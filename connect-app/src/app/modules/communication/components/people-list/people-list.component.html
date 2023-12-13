@@ -1,0 +1,20 @@
+<button mat-button (click)="updateLists()" [disabled]="updateCountdown > 0">
+    Update
+    <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+</button>
+<ul>
+    <li *ngFor="let conversation of conversationList">
+        <a [routerLink]="['/conversation', conversation.id.S]">
+            {{ conversation.companionID.S }}
+        </a>
+    </li>
+</ul>
+
+<ul>
+    <li *ngFor="let user of people">
+        {{ user.name }}
+        <button mat-button (click)="createConversation(user.uid)">
+            Message
+        </button>
+    </li>
+</ul>
