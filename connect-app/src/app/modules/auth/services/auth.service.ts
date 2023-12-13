@@ -6,7 +6,7 @@ import {
   LoginData,
   LoginResponse,
   RegistrationData,
-} from 'src/app/models/models';
+} from 'src/app/modules/auth/models/models';
 import {
   handleLoginError,
   handleRegisterError,

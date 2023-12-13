@@ -6,10 +6,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ProfileComponent } from './components/profile/profile.component';
 import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
-import { UserService } from './services/user.service';
+import { ProfileService } from './services/profile.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
-  providers: [UserService],
+  providers: [ProfileService],
   declarations: [ProfileComponent, UpdateProfileComponent],
   imports: [
     CommonModule,
@@ -21,6 +22,7 @@ import { UserService } from './services/user.service';
     ]),
     HttpClientModule,
     MatSnackBarModule,
+    DatePipe,
   ],
   exports: [RouterModule],
 })

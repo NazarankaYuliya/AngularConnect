@@ -15,3 +15,9 @@ export * from './conversation/conversation.effects';
 export * from './conversation/conversation.reducer';
 export * from './conversation/conversation.selectors';
 export * from './conversation/conversation.state';
+
+export * from './profile/profile.actions';
+export * from './profile/profile.effects';
+export * from './profile/profile.reducer';
+export * from './profile/profile.selectors';
+export * from './profile/profile.state';

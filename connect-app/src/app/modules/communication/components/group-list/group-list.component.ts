@@ -32,7 +32,6 @@ export class GroupListComponent implements OnInit {
     this.store.select(GroupSelectors.selectAllGroups).subscribe(
       (groups) => {
         this.groups = groups;
-        console.log(this.groups);
       },
       (error) => {
         console.error('Error fetching groups:', error);

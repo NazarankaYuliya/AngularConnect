@@ -10,12 +10,15 @@ import { StoreModule } from '@ngrx/store';
 import {
   ConversationEffects,
   GroupEffects,
+  ProfileEffects,
   conversationReducer,
   groupReducer,
+  profileReducer,
 } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { userReducer } from './store/people/people.reducer';
 import { UserEffects } from './store/people/people.effects';
+import { ApiService } from './api.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,10 +32,16 @@ import { UserEffects } from './store/people/people.effects';
       groups: groupReducer,
       users: userReducer,
       conversations: conversationReducer,
+      profile: profileReducer,
     }),
-    EffectsModule.forRoot([GroupEffects, UserEffects, ConversationEffects]),
+    EffectsModule.forRoot([
+      GroupEffects,
+      UserEffects,
+      ConversationEffects,
+      ProfileEffects,
+    ]),
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
