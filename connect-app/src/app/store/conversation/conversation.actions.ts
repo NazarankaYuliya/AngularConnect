@@ -11,3 +11,8 @@ export const loadConversationsSuccess = createAction(
 export const loadConversationsFailure = createAction(
   '[Conversation] Load Conversations Failure'
 );
+
+export const addConversation = createAction(
+  '[Conversation] Add Conversation',
+  props<{ conversation: ConversationListItem }>()
+);

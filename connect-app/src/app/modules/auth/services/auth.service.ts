@@ -10,8 +10,7 @@ import {
 import {
   handleLoginError,
   handleRegisterError,
-  openSnackBar,
-} from 'src/app/utils/error-handling';
+} from 'src/app/utils/errorHandlers/authErrorHandler';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +27,6 @@ export class AuthService {
     return this.http
       .post<void>(this.registrationUrl, userData, { headers })
       .pipe(catchError((error) => handleRegisterError(error, this.snackBar)));
-  }
-
-  showSuccessToast(message: string): void {
-    openSnackBar(message, this.snackBar);
   }
 
   login(loginData: LoginData): Observable<LoginResponse> {

@@ -12,6 +12,8 @@ import * as UserActions from 'src/app/store/people/people.actions';
 import * as UserSelectors from 'src/app/store/people/people.selectors';
 import * as ConversationSelectors from 'src/app/store/conversation/conversation.selectors';
 import * as ConversationActions from 'src/app/store/conversation/conversation.actions';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-people-list',
@@ -20,6 +22,7 @@ import * as ConversationActions from 'src/app/store/conversation/conversation.ac
 })
 export class PeopleListComponent implements OnInit {
   conversationList: ConversationListItem[] = [];
+  companions: string[] = [];
   people: User[] = [];
   updateCountdown: number = 0;
   userId = localStorage.getItem('uid');
@@ -27,7 +30,8 @@ export class PeopleListComponent implements OnInit {
   constructor(
     private peopleService: PeopleService,
     private conversationService: ConversationService,
-    private store: Store
+    private store: Store,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -41,7 +45,6 @@ export class PeopleListComponent implements OnInit {
     this.store.select(UserSelectors.selectAllUsers).subscribe(
       (users) => {
         this.people = users;
-        console.log(this.people);
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -53,6 +56,9 @@ export class PeopleListComponent implements OnInit {
     this.store.select(ConversationSelectors.selectAllConversations).subscribe(
       (conversations) => {
         this.conversationList = conversations;
+        this.companions = conversations.map(
+          (conversation) => conversation.companionID.S
+        );
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -70,7 +76,6 @@ export class PeopleListComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching conversations from the server:', error);
-        this.store.dispatch(ConversationActions.loadConversationsFailure());
       }
     );
   }
@@ -86,7 +91,6 @@ export class PeopleListComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching users from the server:', error);
-        this.store.dispatch(UserActions.loadUsersFailure());
       }
     );
   }
@@ -110,7 +114,15 @@ export class PeopleListComponent implements OnInit {
     this.conversationService
       .createConversation(companionId)
       .subscribe((res) => {
-        console.log(res);
+        const newConversation: ConversationListItem = {
+          id: { S: res.conversationID },
+          companionID: { S: companionId },
+        };
+        this.store.dispatch(
+          ConversationActions.addConversation({ conversation: newConversation })
+        );
+
+        showSuccessToast('Conversation created', this.snackBar);
       });
   }
 }

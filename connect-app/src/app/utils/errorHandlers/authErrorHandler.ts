@@ -2,12 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import * as Constants from 'src/app/constants/constants';
-
-export function openSnackBar(message: string, snackBar: MatSnackBar): void {
-  snackBar.open(message, 'Close', {
-    duration: 7000,
-  });
-}
+import { openSnackBar } from '../openSnackBar';
 
 export function handleRegisterError(
   error: HttpErrorResponse,
@@ -19,10 +14,11 @@ export function handleRegisterError(
     if (error.error && error.error.type === 'InvalidFormDataException') {
       errorMessage = Constants.INVALID_FORM_DATA_MESSAGE + error.error.message;
     } else if (
-      error.error
-      && error.error.type === 'PrimaryDuplicationException'
+      error.error &&
+      error.error.type === 'PrimaryDuplicationException'
     ) {
-      errorMessage = Constants.USER_ALREADY_EXISTS_MESSAGE + error.error.message;
+      errorMessage =
+        Constants.USER_ALREADY_EXISTS_MESSAGE + error.error.message;
     } else {
       errorMessage = Constants.UNKNOWN_ERROR_MESSAGE;
     }

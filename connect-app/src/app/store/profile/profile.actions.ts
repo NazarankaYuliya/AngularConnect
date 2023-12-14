@@ -9,3 +9,8 @@ export const loadProfileSuccess = createAction(
 export const loadProfileFailure = createAction(
   '[Profile] Load Profile Failure'
 );
+
+export const updateProfile = createAction(
+  '[Profile] Update Profile',
+  props<{ profile: Profile }>()
+);

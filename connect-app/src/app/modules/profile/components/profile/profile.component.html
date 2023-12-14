@@ -1,8 +1,23 @@
 <div class="profile-container">
-    <div>{{profileData.name}}</div>
-    <div>{{profileData.email}}</div>
-    <div>{{profileData.createdAt | date}}</div>
-    <div>{{profileData.id}}</div>
-    <button>Edit</button>
-    <button>Logout</button>
+    <button (click)="logout()">Logout</button>
+
+    <div class="profileData">
+        <ng-container *ngIf="!editMode; else editModeTemplate">
+            <button (click)="toggleEditMode()">Edit</button>
+            <div>Name: {{ profileData.name }}</div>
+        </ng-container>
+
+        <ng-template #editModeTemplate>
+            <button (click)="toggleEditMode()">Cancel</button>
+            <button (click)="saveProfile()">Save</button>
+
+            <div>Name: <input type="text" [(ngModel)]="profileDataCopy.name" /> </div>
+        </ng-template>
+
+        <div>Email: {{profileData.email}}</div>
+        <div>Creation Date: {{profileData.createdAt | date}}</div>
+        <div>Profile ID: {{profileData.id}}</div>
+
+    </div>
+
 </div>

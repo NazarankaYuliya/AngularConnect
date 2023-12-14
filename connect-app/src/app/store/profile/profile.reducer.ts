@@ -4,8 +4,12 @@ import { ProfileState, initialProfileState } from './profile.state';
 
 export const profileReducer = createReducer(
   initialProfileState,
-  on(ProfileActions.loadProfileSuccess, (state, { profile }) => ({
-    ...state,
-    profile,
-  }))
+  on(
+    ProfileActions.loadProfileSuccess,
+    ProfileActions.updateProfile,
+    (state, { profile }) => ({
+      ...state,
+      profile,
+    })
+  )
 );

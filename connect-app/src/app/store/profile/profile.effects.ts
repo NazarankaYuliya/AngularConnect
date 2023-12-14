@@ -25,21 +25,17 @@ export class ProfileEffects {
       ofType(ProfileActions.loadProfile),
       withLatestFrom(this.store.pipe(select(ProfileSelectors.selectProfile))),
       take(1),
-      mergeMap(([, profile]) => {
-        if (!profile) {
-          return this.profileService.getProfile().pipe(
-            map((response: ProfileResponse) => {
-              const loadedProfile: Profile =
-                mapProfileResponseToProfile(response);
-              return ProfileActions.loadProfileSuccess({
-                profile: loadedProfile,
-              });
-            }),
-            catchError(() => EMPTY)
-          );
-        } else {
-          return of();
-        }
+      mergeMap(() => {
+        return this.profileService.getProfile().pipe(
+          map((response: ProfileResponse) => {
+            const loadedProfile: Profile =
+              mapProfileResponseToProfile(response);
+            return ProfileActions.loadProfileSuccess({
+              profile: loadedProfile,
+            });
+          }),
+          catchError(() => EMPTY)
+        );
       })
     )
   );

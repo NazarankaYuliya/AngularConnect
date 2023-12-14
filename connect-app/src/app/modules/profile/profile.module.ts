@@ -5,13 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ProfileComponent } from './components/profile/profile.component';
-import { UpdateProfileComponent } from './components/update-profile/update-profile.component';
+
 import { ProfileService } from './services/profile.service';
 import { DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   providers: [ProfileService],
-  declarations: [ProfileComponent, UpdateProfileComponent],
+  declarations: [ProfileComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -23,6 +24,8 @@ import { DatePipe } from '@angular/common';
     HttpClientModule,
     MatSnackBarModule,
     DatePipe,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [RouterModule],
 })

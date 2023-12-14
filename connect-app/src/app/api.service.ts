@@ -20,6 +20,11 @@ export class ApiService {
     return this.http.post<T>(`${this.baseUrl}${endpoint}`, body, { headers });
   }
 
+  put<T>(endpoint: string, body: any): Observable<T> {
+    const headers = this.createHeaders();
+    return this.http.put<T>(`${this.baseUrl}${endpoint}`, body, { headers });
+  }
+
   delete<T>(endpoint: string): Observable<T> {
     const headers = this.createHeaders();
     const options = { headers };

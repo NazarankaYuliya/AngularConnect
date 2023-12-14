@@ -6,6 +6,9 @@ import { Group, GroupListResponce } from '../../models/group.models';
 import { Store } from '@ngrx/store';
 import * as GroupActions from 'src/app/store/group/group.actions';
 import * as GroupSelectors from 'src/app/store/group/group.selectors';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-group-list',
@@ -20,7 +23,8 @@ export class GroupListComponent implements OnInit {
   constructor(
     private store: Store,
     private groupService: GroupService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -78,6 +82,8 @@ export class GroupListComponent implements OnInit {
         const groupName = result.data.name;
 
         this.groupService.createGroup(groupName).subscribe((res) => {
+          showSuccessToast('Group created', this.snackBar);
+
           this.store.dispatch(
             GroupActions.addGroup({
               group: {
@@ -89,8 +95,6 @@ export class GroupListComponent implements OnInit {
             })
           );
         });
-
-        dialogRef.close();
       }
     });
   }

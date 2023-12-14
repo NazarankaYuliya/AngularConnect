@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RegistrationData } from 'src/app/modules/auth/models/models';
 
 import { AuthService } from '../../services/auth.service';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.registrationForm = this.fb.group({
       name: [
@@ -41,7 +44,7 @@ export class RegisterComponent {
       const registrationData: RegistrationData = this.registrationForm.value;
 
       this.authService.register(registrationData).subscribe(() => {
-        this.authService.showSuccessToast('Registration successful');
+        showSuccessToast('Registration successful', this.snackBar);
         this.router.navigate(['/signin']);
       });
     }

@@ -9,5 +9,8 @@ export const conversationReducer = createReducer(
   initialConversationState,
   on(ConversationActions.loadConversationsSuccess, (state, { conversations }) =>
     conversationAdapter.setAll(conversations, state)
+  ),
+  on(ConversationActions.addConversation, (state, { conversation }) =>
+    conversationAdapter.addOne(conversation, state)
   )
 );
