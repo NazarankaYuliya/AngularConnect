@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
-import { CreateGroupResponce, GroupListResponce } from '../models/group.models';
-import { ApiService } from '../../../api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, Observable } from 'rxjs';
 import {
   handleGroupCreateError,
   handleGroupDeleteError,
   handleGroupLoadError,
 } from 'src/app/utils/errorHandlers/groupsErrorHandler';
+
+import { ApiService } from '../../../api.service';
+import {
+  CreateGroupResponce,
+  GroupListResponce,
+  GroupMessagesResponse,
+} from '../models/group.models';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +21,14 @@ export class GroupService {
   private endpoint = 'groups';
 
   constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+
+  setCreatorId(creatorId: string): void {
+    localStorage.setItem('groupCreatorId', creatorId);
+  }
+
+  getCreatorId(): string | null {
+    return localStorage.getItem('groupCreatorId');
+  }
 
   getGroupList(): Observable<GroupListResponce> {
     return this.apiService
@@ -38,5 +51,19 @@ export class GroupService {
       .pipe(
         catchError((error) => handleGroupDeleteError(error, this.snackBar))
       );
+  }
+
+  getGroupMessages(
+    groupId: string,
+    since = 0
+  ): Observable<GroupMessagesResponse> {
+    return this.apiService.get<GroupMessagesResponse>(
+      `${this.endpoint}/read?groupID=${groupId}&since=${since}`
+    );
+  }
+
+  addMessage(groupId: string, message: string): Observable<void> {
+    const body = { groupID: groupId, message };
+    return this.apiService.post<void>(`${this.endpoint}/append`, body);
   }
 }

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginData } from 'src/app/modules/auth/models/models';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import { AuthService } from '../../services/auth.service';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',

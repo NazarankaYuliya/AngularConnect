@@ -4,7 +4,7 @@
     <div class="profileData">
         <ng-container *ngIf="!editMode; else editModeTemplate">
             <button (click)="toggleEditMode()">Edit</button>
-            <div>Name: {{ profileData.name }}</div>
+            <div>Name: {{ (profileData$ |async)?.name }}</div>
         </ng-container>
 
         <ng-template #editModeTemplate>
@@ -14,9 +14,9 @@
             <div>Name: <input type="text" [(ngModel)]="profileDataCopy.name" /> </div>
         </ng-template>
 
-        <div>Email: {{profileData.email}}</div>
-        <div>Creation Date: {{profileData.createdAt | date}}</div>
-        <div>Profile ID: {{profileData.id}}</div>
+        <div>Email: {{(profileData$ |async)?.email}}</div>
+        <div>Creation Date: {{(profileData$ |async)?.createdAt | date}}</div>
+        <div>Profile ID: {{(profileData$ |async)?.id}}</div>
 
     </div>
 

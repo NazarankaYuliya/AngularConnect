@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
-import { ProfileResponse } from '../models/profile.model';
-import { ApiService } from 'src/app/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, Observable } from 'rxjs';
+import { RequestBody } from 'src/app/api.models';
+import { ApiService } from 'src/app/api.service';
 import { handleProfileError } from 'src/app/utils/errorHandlers/profileErrorHandler';
+
+import { ProfileResponse } from '../models/profile.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +22,7 @@ export class ProfileService {
       .pipe(catchError((error) => handleProfileError(error, this.snackBar)));
   }
 
-  updateProfile(data: { name: string }): Observable<void> {
+  updateProfile(data: RequestBody): Observable<void> {
     return this.apiService.put<void>(`${this.endpoint}`, data);
   }
 

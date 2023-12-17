@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import * as Constants from 'src/app/constants/constants';
+
 import { openSnackBar } from '../openSnackBar';
 
 export function handleProfileError(

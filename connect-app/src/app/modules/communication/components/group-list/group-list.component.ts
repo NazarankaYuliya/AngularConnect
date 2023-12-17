@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { GroupService } from '../../services/group.service';
-import { ModalService } from '../../services/modal.service';
-import { CreateGroupModalComponent } from '../../modals/create-group-modal/create-group-modal.component';
-import { Group, GroupListResponce } from '../../models/group.models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import * as GroupActions from 'src/app/store/group/group.actions';
 import * as GroupSelectors from 'src/app/store/group/group.selectors';
 import { showSuccessToast } from 'src/app/utils/openSnackBar';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { of, switchMap } from 'rxjs';
+
+import { CreateGroupModalComponent } from '../../modals/create-group-modal/create-group-modal.component';
+import { Group, GroupListResponce } from '../../models/group.models';
+import { GroupService } from '../../services/group.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-group-list',
@@ -16,8 +17,8 @@ import { of, switchMap } from 'rxjs';
   styleUrls: ['./group-list.component.scss'],
 })
 export class GroupListComponent implements OnInit {
-  groups: Group[] = [];
-  updateCountdown: number = 0;
+  groups$?: Observable<Group[]>;
+  updateCountdown = 0;
   userId = localStorage.getItem('uid') || '';
 
   constructor(
@@ -29,18 +30,11 @@ export class GroupListComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(GroupActions.loadGroups());
-    this.getGroups();
+    this.groups$ = this.store.select(GroupSelectors.selectAllGroups);
   }
 
-  getGroups(): void {
-    this.store.select(GroupSelectors.selectAllGroups).subscribe(
-      (groups) => {
-        this.groups = groups;
-      },
-      (error) => {
-        console.error('Error fetching groups:', error);
-      }
-    );
+  setCreatorId(id: string) {
+    this.groupService.setCreatorId(id);
   }
 
   updateList(): void {
@@ -64,7 +58,7 @@ export class GroupListComponent implements OnInit {
 
       this.updateCountdown = 60;
       const countdownInterval = setInterval(() => {
-        this.updateCountdown--;
+        this.updateCountdown -= 1;
         if (this.updateCountdown === 0) {
           clearInterval(countdownInterval);
         }

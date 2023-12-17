@@ -9,6 +9,6 @@ export const userAdapter = createEntityAdapter<User>({
   selectId: selectUserId,
 });
 
-export interface UserState extends EntityState<User> {}
+export type UserState = EntityState<User>;
 
 export const initialUserState: UserState = userAdapter.getInitialState();

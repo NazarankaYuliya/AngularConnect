@@ -6,10 +6,13 @@
     <button mat-button (click)="createGroup()">Create</button>
 </div>
 
-<ul>
-    <li *ngFor="let group of groups">
-        {{ group.name }}
+<div>
+    <div *ngFor="let group of groups$ | async">
+        <a [routerLink]="'/group/' + group.id" (click)="setCreatorId(group.createdBy)">
+            {{ group.name }}
+        </a>
+
         <button mat-icon-button color="warn" *ngIf="group.createdBy === userId" (click)="deleteGroup(group.id)">delete
         </button>
-    </li>
-</ul>
+    </div>
+</div>

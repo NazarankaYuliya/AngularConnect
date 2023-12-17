@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../../services/profile.service';
-import { Profile } from '../../models/profile.model';
-import { Store } from '@ngrx/store';
-import { selectProfile } from 'src/app/store/profile/profile.selectors';
-import * as ProfileActions from 'src/app/store/profile/profile.actions';
-import { Router } from '@angular/router';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, tap } from 'rxjs';
+import * as ProfileActions from 'src/app/store/profile/profile.actions';
+import { selectProfile } from 'src/app/store/profile/profile.selectors';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+
+import { Profile } from '../../models/profile.model';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  profileData$?: Observable<Profile | null>;
   editMode = false;
 
   profileData: Profile = {
@@ -39,16 +42,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(ProfileActions.loadProfile());
-    this.getProfile();
-  }
-
-  getProfile() {
-    this.store.select(selectProfile).subscribe((profile) => {
-      if (profile) {
-        this.profileData = profile;
-        this.profileDataCopy = { ...profile };
-      }
-    });
+    this.profileData$ = this.store.select(selectProfile).pipe(
+      tap((profile) => {
+        if (profile) {
+          this.profileDataCopy = { ...profile };
+        }
+      })
+    );
   }
 
   logout() {

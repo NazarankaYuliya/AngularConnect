@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { groupAdapter, initialGroupState } from './group.state';
+
 import * as GroupActions from './group.actions';
+import { groupAdapter, initialGroupState } from './group.state';
 
 export const groupReducer = createReducer(
   initialGroupState,

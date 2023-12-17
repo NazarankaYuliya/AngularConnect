@@ -1,9 +1,9 @@
-<button mat-button (click)="updateLists()" [disabled]="updateCountdown > 0">
+<button mat-button (click)="updateLists()">
     Update
-    <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+    <span *ngIf="updateCountdown$ | async as countdown"> ({{ countdown }}s)</span>
 </button>
 <ul>
-    <li *ngFor="let conversation of conversationList">
+    <li *ngFor="let conversation of conversationList$ |async">
         <a [routerLink]="['/conversation', conversation.id.S]">
             {{ conversation.id.S }}
         </a>
@@ -11,7 +11,7 @@
 </ul>
 
 <ul>
-    <li *ngFor="let user of people">
+    <li *ngFor="let user of people$ |async">
         <div [ngClass]="{'companion': companions.includes(user.uid)}"> {{ user.name }}
             <button mat-button (click)="createConversation(user.uid)">
                 Message

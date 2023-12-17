@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { Group } from 'src/app/modules/communication/models/group.models';
+import {
+  Group,
+} from 'src/app/modules/communication/models/group.models';
 
 export const loadGroups = createAction('[Group] Load Groups');
 export const loadGroupsSuccess = createAction(
@@ -26,9 +28,4 @@ export const removeGroup = createAction(
 export const removeGroupSuccess = createAction(
   '[Group] Remove Group Success',
   props<{ groupId: string }>()
-);
-
-export const setLoadedStatus = createAction(
-  '[Group] Set Loaded Status',
-  props<{ loaded: boolean }>()
 );

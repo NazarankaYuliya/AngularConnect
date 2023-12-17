@@ -1,5 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+
 import { ConfirmationComponent } from '../modals/confirmation/confirmation.component';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ModalService {
       width: '400px',
       height: '200px',
       disableClose: true,
-      data: { message: message },
+      data: { message },
     });
     return dialogRef;
   }
@@ -25,7 +26,7 @@ export class ModalService {
       width: '400px',
       height: '400px',
       disableClose: true,
-      data: data,
+      data,
     });
     return dialogRef;
   }

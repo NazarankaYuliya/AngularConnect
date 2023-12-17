@@ -9,7 +9,6 @@ export const conversationAdapter = createEntityAdapter<ConversationListItem>({
   selectId: selectConversationId,
 });
 
-export interface ConversationState extends EntityState<ConversationListItem> {}
+export type ConversationState = EntityState<ConversationListItem>;
 
-export const initialConversationState: ConversationState =
-  conversationAdapter.getInitialState();
+export const initialConversationState: ConversationState = conversationAdapter.getInitialState();

@@ -1,0 +1,25 @@
+<div>
+    <a [routerLink]="['/']">Back to Primary Page</a>
+</div>
+<h1>Group owner: {{creatorId}}</h1>
+
+<div>
+    <button *ngIf="groupId" (click)="updateGroupMessages(groupId)">Update</button>
+    <div *ngIf="creatorId === userId">
+        <button *ngIf="groupId !== null" (click)="deleteGroup(groupId)">Delete Group</button>
+    </div>
+
+</div>
+
+<div *ngFor="let message of messages$ |async">
+    <p>{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
+    <p>{{message.authorName}}</p>
+    <p>{{message.message}}</p>
+
+
+</div>
+
+<div [formGroup]="newMessageForm">
+    <input type="text" placeholder="Type your message..." formControlName="newMessage">
+    <button *ngIf="groupId" [disabled]="newMessageForm.invalid" (click)="sendMessage(groupId)">Send</button>
+</div>

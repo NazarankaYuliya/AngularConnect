@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { RequestBody } from './api.models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +17,12 @@ export class ApiService {
     return this.http.get<T>(`${this.baseUrl}${endpoint}`, { headers });
   }
 
-  post<T>(endpoint: string, body: any): Observable<T> {
+  post<T>(endpoint: string, body: RequestBody): Observable<T> {
     const headers = this.createHeaders();
     return this.http.post<T>(`${this.baseUrl}${endpoint}`, body, { headers });
   }
 
-  put<T>(endpoint: string, body: any): Observable<T> {
+  put<T>(endpoint: string, body: RequestBody): Observable<T> {
     const headers = this.createHeaders();
     return this.http.put<T>(`${this.baseUrl}${endpoint}`, body, { headers });
   }

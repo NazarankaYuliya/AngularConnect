@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { groupAdapter, GroupState } from './group.state';
 
 export const selectGroupState = createFeatureSelector<GroupState>('groups');

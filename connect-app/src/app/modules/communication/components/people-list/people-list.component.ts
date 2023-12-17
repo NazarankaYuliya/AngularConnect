@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { PeopleService } from '../../services/people.service';
-import { ConversationService } from '../../services/conversation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import {
+  combineLatest, map, Observable, take, timer
+} from 'rxjs';
+import * as ConversationActions from 'src/app/store/conversation/conversation.actions';
+import * as ConversationSelectors from 'src/app/store/conversation/conversation.selectors';
+import * as UserActions from 'src/app/store/people/people.actions';
+import * as UserSelectors from 'src/app/store/people/people.selectors';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+
 import {
   ConversationListItem,
   PeopleListItem,
   PeopleListResponse,
   User,
 } from '../../models/people.models';
-import { Store } from '@ngrx/store';
-import * as UserActions from 'src/app/store/people/people.actions';
-import * as UserSelectors from 'src/app/store/people/people.selectors';
-import * as ConversationSelectors from 'src/app/store/conversation/conversation.selectors';
-import * as ConversationActions from 'src/app/store/conversation/conversation.actions';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConversationService } from '../../services/conversation.service';
+import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'app-people-list',
@@ -21,10 +25,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./people-list.component.scss'],
 })
 export class PeopleListComponent implements OnInit {
-  conversationList: ConversationListItem[] = [];
+  conversationList$?: Observable<ConversationListItem[]>;
   companions: string[] = [];
-  people: User[] = [];
-  updateCountdown: number = 0;
+  people$?: Observable<User[]>;
+  updateCountdown$?: Observable<number>;
   userId = localStorage.getItem('uid');
 
   constructor(
@@ -35,35 +39,25 @@ export class PeopleListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.dispatch(ConversationActions.loadConversations());
-    this.store.dispatch(UserActions.loadUsers());
-    this.getConversationsList();
-    this.getPeopleList();
+    combineLatest([
+      this.store.dispatch(ConversationActions.loadConversations()),
+      this.store.dispatch(UserActions.loadUsers()),
+    ]);
+
+    this.initData();
   }
 
-  getPeopleList(): void {
-    this.store.select(UserSelectors.selectAllUsers).subscribe(
-      (users) => {
-        this.people = users;
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }
-
-  getConversationsList(): void {
-    this.store.select(ConversationSelectors.selectAllConversations).subscribe(
-      (conversations) => {
-        this.conversationList = conversations;
-        this.companions = conversations.map(
-          (conversation) => conversation.companionID.S
-        );
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
+  initData(): void {
+    combineLatest([
+      (this.conversationList$ = this.store.select(
+        ConversationSelectors.selectAllConversations
+      )),
+      (this.people$ = this.store.select(UserSelectors.selectAllUsers)),
+    ]).subscribe(([conversations]) => {
+      this.companions = conversations.map(
+        (conversation) => conversation.companionID.S
+      );
+    });
   }
 
   updateConversationList() {
@@ -96,18 +90,12 @@ export class PeopleListComponent implements OnInit {
   }
 
   updateLists(): void {
-    if (this.updateCountdown === 0) {
-      this.updateConversationList();
-      this.updateUsersList();
+    this.updateCountdown$ = timer(0, 1000).pipe(
+      take(60),
+      map((value) => 60 - value)
+    );
 
-      this.updateCountdown = 60;
-      const countdownInterval = setInterval(() => {
-        this.updateCountdown--;
-        if (this.updateCountdown === 0) {
-          clearInterval(countdownInterval);
-        }
-      }, 1000);
-    }
+    combineLatest([this.updateConversationList(), this.updateUsersList()]);
   }
 
   createConversation(companionId: string) {

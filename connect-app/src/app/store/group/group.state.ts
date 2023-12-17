@@ -1,7 +1,7 @@
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Group } from 'src/app/modules/communication/models/group.models';
 
-export interface GroupState extends EntityState<Group> {}
+export type GroupState = EntityState<Group>;
 
 export const groupAdapter = createEntityAdapter<Group>();
 
