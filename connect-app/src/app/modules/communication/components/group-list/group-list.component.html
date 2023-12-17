@@ -1,5 +1,5 @@
 <div>
-    <button mat-button (click)="updateList()" [disabled]="updateCountdown > 0">
+    <button (click)="updateList()" [disabled]="updateCountdown > 0">
         Update
         <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
     </button>

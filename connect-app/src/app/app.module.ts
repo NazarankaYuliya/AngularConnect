@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   ConversationEffects,
+  ConversationMessagesEffects,
+  conversationMessagesReducer,
   conversationReducer,
   GroupEffects,
   groupReducer,
@@ -35,7 +37,8 @@ import { userReducer } from './store/people/people.reducer';
       users: userReducer,
       conversations: conversationReducer,
       profile: profileReducer,
-      messages: messagesReducer,
+      groupMessages: messagesReducer,
+      messages: conversationMessagesReducer,
     }),
     EffectsModule.forRoot([
       GroupEffects,
@@ -43,6 +46,7 @@ import { userReducer } from './store/people/people.reducer';
       ConversationEffects,
       ProfileEffects,
       MessagesEffects,
+      ConversationMessagesEffects,
     ]),
   ],
   providers: [ApiService],

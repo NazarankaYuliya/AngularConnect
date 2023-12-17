@@ -16,3 +16,13 @@ export const addConversation = createAction(
   '[Conversation] Add Conversation',
   props<{ conversation: ConversationListItem }>()
 );
+
+export const removeConversation = createAction(
+  '[Conversation] Remove Conversation',
+  props<{ conversationId: string }>()
+);
+
+export const removeConversationSuccess = createAction(
+  '[Conversation] Remove Conversation Success',
+  props<{ conversationId: string }>()
+);

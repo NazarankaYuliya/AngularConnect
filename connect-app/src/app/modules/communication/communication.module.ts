@@ -14,6 +14,7 @@ import { ConversationService } from './services/conversation.service';
 import { GroupService } from './services/group.service';
 import { ModalService } from './services/modal.service';
 import { PeopleService } from './services/people.service';
+import { PersonConversationComponent } from './pages/person-conversation/person-conversation.component';
 
 @NgModule({
   providers: [ModalService, ConversationService, GroupService, PeopleService],
@@ -25,6 +26,7 @@ import { PeopleService } from './services/people.service';
     ConfirmationComponent,
     CreateGroupModalComponent,
     GroupDialogComponent,
+    PersonConversationComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,10 @@ import { PeopleService } from './services/people.service';
       {
         path: 'group/:groupID',
         component: GroupDialogComponent,
+      },
+      {
+        path: 'conversation/:conversationID',
+        component: PersonConversationComponent,
       },
     ]),
     MatDialogModule,

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Message } from 'src/app/modules/communication/models/group.models';
+import { Message } from 'src/app/modules/communication/models/messages.models';
 
 export const loadMessages = createAction(
   '[Messages] Load Messages',

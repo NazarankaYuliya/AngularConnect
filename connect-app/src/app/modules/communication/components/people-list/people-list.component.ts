@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import {
-  combineLatest, map, Observable, take, timer
-} from 'rxjs';
+import { combineLatest, map, Observable, take, timer } from 'rxjs';
 import * as ConversationActions from 'src/app/store/conversation/conversation.actions';
 import * as ConversationSelectors from 'src/app/store/conversation/conversation.selectors';
 import * as UserActions from 'src/app/store/people/people.actions';
@@ -18,6 +16,7 @@ import {
 } from '../../models/people.models';
 import { ConversationService } from '../../services/conversation.service';
 import { PeopleService } from '../../services/people.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people-list',
@@ -32,6 +31,7 @@ export class PeopleListComponent implements OnInit {
   userId = localStorage.getItem('uid');
 
   constructor(
+    private router: Router,
     private peopleService: PeopleService,
     private conversationService: ConversationService,
     private store: Store,
@@ -99,18 +99,33 @@ export class PeopleListComponent implements OnInit {
   }
 
   createConversation(companionId: string) {
-    this.conversationService
-      .createConversation(companionId)
-      .subscribe((res) => {
-        const newConversation: ConversationListItem = {
-          id: { S: res.conversationID },
-          companionID: { S: companionId },
-        };
-        this.store.dispatch(
-          ConversationActions.addConversation({ conversation: newConversation })
-        );
+    const existingConversation = this.conversationList$!.pipe(
+      map((conversations) =>
+        conversations.find((conv) => conv.companionID.S === companionId)
+      ),
+      take(1)
+    );
 
-        showSuccessToast('Conversation created', this.snackBar);
-      });
+    existingConversation.subscribe((conversation) => {
+      if (conversation) {
+        this.router.navigate(['/conversation', conversation.id.S]);
+      } else {
+        this.conversationService
+          .createConversation(companionId)
+          .subscribe((res) => {
+            const newConversation: ConversationListItem = {
+              id: { S: res.conversationID },
+              companionID: { S: companionId },
+            };
+            this.store.dispatch(
+              ConversationActions.addConversation({
+                conversation: newConversation,
+              })
+            );
+            this.router.navigate(['/conversation', res.conversationID]);
+            showSuccessToast('Conversation created', this.snackBar);
+          });
+      }
+    });
   }
 }

@@ -23,3 +23,8 @@ export * from './profile/profile.effects';
 export * from './profile/profile.reducer';
 export * from './profile/profile.selectors';
 export * from './profile/profile.state';
+export * from './personMessages/messages.actions';
+export * from './personMessages/messages.effects';
+export * from './personMessages/messages.reducer';
+export * from './personMessages/messages.selectors';
+export * from './personMessages/messages.state';

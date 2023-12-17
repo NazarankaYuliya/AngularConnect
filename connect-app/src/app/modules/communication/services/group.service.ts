@@ -8,11 +8,8 @@ import {
 } from 'src/app/utils/errorHandlers/groupsErrorHandler';
 
 import { ApiService } from '../../../api.service';
-import {
-  CreateGroupResponce,
-  GroupListResponce,
-  GroupMessagesResponse,
-} from '../models/group.models';
+import { CreateGroupResponce, GroupListResponce } from '../models/group.models';
+import { MessagesResponse } from '../models/messages.models';
 
 @Injectable({
   providedIn: 'root',
@@ -55,9 +52,9 @@ export class GroupService {
 
   getGroupMessages(
     groupId: string,
-    since = 0
-  ): Observable<GroupMessagesResponse> {
-    return this.apiService.get<GroupMessagesResponse>(
+    since: number = 0
+  ): Observable<MessagesResponse> {
+    return this.apiService.get<MessagesResponse>(
       `${this.endpoint}/read?groupID=${groupId}&since=${since}`
     );
   }

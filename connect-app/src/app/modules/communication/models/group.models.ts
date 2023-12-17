@@ -28,27 +28,3 @@ export interface GroupListResponce {
 export interface CreateGroupResponce {
   groupID: string;
 }
-
-export interface GroupMessagesResponse {
-  Count: number;
-  Items: [
-    {
-      authorID: {
-        S: string;
-      };
-      createdAt: {
-        S: string;
-      };
-
-      message: {
-        S: string;
-      };
-    }
-  ];
-}
-
-export interface Message {
-  authorID: string;
-  createdAt: string;
-  message: string;
-}

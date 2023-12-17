@@ -21,7 +21,7 @@ export class GroupDialogComponent implements OnInit {
   userId: string | null = null;
   messages$?: Observable<any[]>;
   newMessageForm: FormGroup;
-  since = 0;
+  updateCountdown = 0;
 
   constructor(
     private groupService: GroupService,
@@ -76,6 +76,16 @@ export class GroupDialogComponent implements OnInit {
     });
   }
   updateGroupMessages(groupId: string) {
-    this.store.dispatch(MessagesActions.loadMessages({ groupID: groupId }));
+    if (this.updateCountdown === 0) {
+      this.store.dispatch(MessagesActions.loadMessages({ groupID: groupId }));
+
+      this.updateCountdown = 60;
+      const countdownInterval = setInterval(() => {
+        this.updateCountdown -= 1;
+        if (this.updateCountdown === 0) {
+          clearInterval(countdownInterval);
+        }
+      }, 1000);
+    }
   }
 }

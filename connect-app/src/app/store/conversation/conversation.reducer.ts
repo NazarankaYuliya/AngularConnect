@@ -13,5 +13,8 @@ export const conversationReducer = createReducer(
   ),
   on(ConversationActions.addConversation, (state, { conversation }) =>
     conversationAdapter.addOne(conversation, state)
+  ),
+  on(ConversationActions.removeConversation, (state, { conversationId }) =>
+    conversationAdapter.removeOne(conversationId, state)
   )
 );
