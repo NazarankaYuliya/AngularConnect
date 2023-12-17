@@ -1,22 +1,37 @@
 <div class="profile-container">
-    <button (click)="logout()">Logout</button>
+    <header class="header">
+        <h2>Hello, {{ (profileData$ |async)?.name }}!</h2>
+        <button class="btn" (click)="logout()">Logout</button>
+    </header>
 
-    <div class="profileData">
+
+    <div class="profile-data">
+        <div>Profile Creation Date: {{(profileData$ |async)?.createdAt | date}}</div>
+        <div>Profile ID: {{(profileData$ |async)?.id}}</div>
+        <div>Email: {{(profileData$ |async)?.email}}</div>
+
+
+
         <ng-container *ngIf="!editMode; else editModeTemplate">
-            <button (click)="toggleEditMode()">Edit</button>
             <div>Name: {{ (profileData$ |async)?.name }}</div>
+
+            <div class="btns-container">
+                <button class="btn" routerLink="/"> Back</button>
+                <button class="btn" (click)="toggleEditMode()">Edit profile</button>
+            </div>
+
+
         </ng-container>
 
         <ng-template #editModeTemplate>
-            <button (click)="toggleEditMode()">Cancel</button>
-            <button (click)="saveProfile()">Save</button>
-
             <div>Name: <input type="text" [(ngModel)]="profileDataCopy.name" /> </div>
+            <div class="btns-container">
+                <button class="btn" (click)="toggleEditMode()">Cancel</button>
+                <button class="btn" (click)="saveProfile()">Save</button>
+            </div>
+
         </ng-template>
 
-        <div>Email: {{(profileData$ |async)?.email}}</div>
-        <div>Creation Date: {{(profileData$ |async)?.createdAt | date}}</div>
-        <div>Profile ID: {{(profileData$ |async)?.id}}</div>
 
     </div>
 

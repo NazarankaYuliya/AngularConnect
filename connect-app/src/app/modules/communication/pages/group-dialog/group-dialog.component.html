@@ -1,30 +1,29 @@
-<div>
-    <a [routerLink]="['/']">Back to Primary Page</a>
-</div>
-<h1>Group owner: {{creatorId}}</h1>
+<div class="group-dialog-container">
+    <div>
+        <a [routerLink]="['/']">Back to Main Page</a>
+    </div>
+    <h1>Group owner: {{creatorId}}</h1>
 
-<div>
-    <button *ngIf="groupId" (click)="updateGroupMessages(groupId)" [disabled]="updateCountdown > 0">Update
-        <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
-    </button>
-    <div *ngIf="creatorId === userId">
-        <button *ngIf="groupId !== null" (click)="deleteGroup(groupId)">Delete Group</button>
+    <div>
+        <button *ngIf="groupId" (click)="updateGroupMessages(groupId)" [disabled]="updateCountdown > 0">Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+        </button>
+        <div *ngIf="creatorId === userId">
+            <button *ngIf="groupId !== null" (click)="deleteGroup(groupId)">Delete Group</button>
+        </div>
+
     </div>
 
-</div>
-
-<div *ngFor="let message of messages$ |async">
-    <div [ngClass]="{'own-message': message.authorID === userId, 'other-message': message.authorID !== userId}">
-        <p>{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
-        <p>{{message.authorName}}</p>
-        <p>{{message.message}}</p>
+    <div *ngFor="let message of messages$ |async">
+        <div [ngClass]="{'own-message': message.authorID === userId, 'other-message': message.authorID !== userId}">
+            <p>{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
+            <p>{{message.authorName}}</p>
+            <p>{{message.message}}</p>
+        </div>
     </div>
 
-
-
-</div>
-
-<div [formGroup]="newMessageForm">
-    <input type="text" placeholder="Type your message..." formControlName="newMessage">
-    <button *ngIf="groupId" [disabled]="newMessageForm.invalid" (click)="sendMessage(groupId)">Send</button>
+    <div [formGroup]="newMessageForm">
+        <input type="text" placeholder="Type your message..." formControlName="newMessage">
+        <button *ngIf="groupId" [disabled]="newMessageForm.invalid" (click)="sendMessage(groupId)">Send</button>
+    </div>
 </div>

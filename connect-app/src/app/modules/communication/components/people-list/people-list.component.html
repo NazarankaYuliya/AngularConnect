@@ -1,14 +1,23 @@
-<button mat-button (click)="updateLists()">
-    Update
-    <span *ngIf="updateCountdown$ | async as countdown"> ({{ countdown }}s)</span>
-</button>
-
-<div *ngFor="let user of people$ |async">
-    <div [ngClass]="{'companion': companions.includes(user.uid)}">
-        <a (click)="createConversation(user.uid)">
-            {{ user.name }}
-        </a>
+<div class="people-list-container">
+    <h1>Users</h1>
+    <div class="btn-container">
+        <button class="btn" (click)="updateLists()">
+            Update
+            <span *ngIf="updateCountdown$ | async as countdown"> ({{ countdown }}s)</span>
+        </button>
     </div>
 
+    <div class="users-list">
+        <div *ngFor="let user of people$ |async">
+            <div [ngClass]="{
+                'companion': companions.includes(user.uid),
+                'user': !companions.includes(user.uid)
+                }" (click)="createConversation(user.uid)">
+
+                {{ user.name | uppercase}}
+
+            </div>
+        </div>
+    </div>
 
 </div>

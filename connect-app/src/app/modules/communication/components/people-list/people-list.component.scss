@@ -1,3 +1,47 @@
+.people-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #f2f2f2;
+  height: 100%;
+  overflow: scroll;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  height: 90%;
+  overflow: scroll;
+  background-color: #fff;
+}
+
+.user {
+  padding: 10px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
 .companion {
-  background-color: green;
+  padding: 10px;
+  background-color: #98cf98;
+  cursor: pointer;
+}
+
+.btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #a7a6a6;
 }

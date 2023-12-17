@@ -1,18 +1,25 @@
-<div>
-    <button (click)="updateList()" [disabled]="updateCountdown > 0">
-        Update
-        <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
-    </button>
-    <button mat-button (click)="createGroup()">Create</button>
-</div>
-
-<div>
-    <div *ngFor="let group of groups$ | async">
-        <a [routerLink]="'/group/' + group.id" (click)="setCreatorId(group.createdBy)">
-            {{ group.name }}
-        </a>
-
-        <button mat-icon-button color="warn" *ngIf="group.createdBy === userId" (click)="deleteGroup(group.id)">delete
+<div class="group-list-container">
+    <h1>Groups</h1>
+    <div class="btns-container">
+        <button class="btn" (click)="updateList()" [disabled]="updateCountdown > 0">
+            Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
         </button>
+        <button class="btn" (click)="createGroup()">Create</button>
+    </div>
+
+    <div class="groups-list">
+        <div *ngFor="let group of groups$ | async">
+            <div class="group-block">
+                <a class="group" [routerLink]="'/group/' + group.id" (click)="setCreatorId(group.createdBy)">
+                    {{ group.name | uppercase}}
+                </a>
+
+                <button class=" btn delete-btn" color="warn" *ngIf="group.createdBy === userId"
+                    (click)="deleteGroup(group.id)">delete
+                </button>
+            </div>
+
+        </div>
     </div>
 </div>
