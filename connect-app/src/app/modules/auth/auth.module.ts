@@ -9,9 +9,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { AuthService } from './services/auth.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @NgModule({
-  providers: [AuthService],
+  providers: [AuthService, SnackbarService],
   declarations: [RegisterComponent, LoginComponent, AuthPageComponent],
   imports: [
     CommonModule,

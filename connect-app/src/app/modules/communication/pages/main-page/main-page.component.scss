@@ -1,6 +1,18 @@
-.main-container {
+.main-wrapper {
   width: 100%;
   height: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.link-wrapper {
+  text-align: right;
+}
+
+.main-container {
+  height: 95%;
   padding: 20px;
   display: flex;
   gap: 20px;
@@ -11,4 +23,34 @@ app-people-list {
   width: 50%;
   height: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.profile-link {
+  padding: 10px;
+  color: #000000;
+  font-size: 16px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.profile-link:hover {
+  background-color: #626262;
+  color: #ffffff;
+}
+
+:host-context(.dark) {
+  .profile-link {
+    background-color: #626262;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    color: #f2f2f2;
+  }
+
+  .profile-link:hover {
+    background-color: #474747;
+    color: #ffffff;
+  }
 }

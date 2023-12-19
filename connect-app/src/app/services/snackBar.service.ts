@@ -9,16 +9,11 @@ import {
   providedIn: 'root',
 })
 export class SnackbarService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar) {}
 
   openSnackBar(message: string): void {
-    const verticalPosition: MatSnackBarVerticalPosition = 'top';
-    const horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-
-    this.snackBar.open(message, 'Close', {
+    this._snackBar.open(message, 'Close', {
       duration: 5000,
-      verticalPosition,
-      horizontalPosition,
     });
   }
 }

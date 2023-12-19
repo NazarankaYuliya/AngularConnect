@@ -15,9 +15,16 @@ import { GroupService } from './services/group.service';
 import { ModalService } from './services/modal.service';
 import { PeopleService } from './services/people.service';
 import { PersonConversationComponent } from './pages/person-conversation/person-conversation.component';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @NgModule({
-  providers: [ModalService, ConversationService, GroupService, PeopleService],
+  providers: [
+    ModalService,
+    ConversationService,
+    GroupService,
+    PeopleService,
+    SnackbarService,
+  ],
 
   declarations: [
     GroupListComponent,

@@ -1,4 +1,10 @@
-<div class="main-container">
-    <app-group-list></app-group-list>
-    <app-people-list></app-people-list>
+<div class="main-wrapper">
+    <div class="link-wrapper">
+        <a [routerLink]="['/user/profile']" class="profile-link">My profile </a>
+    </div>
+
+    <div class="main-container">
+        <app-group-list></app-group-list>
+        <app-people-list></app-people-list>
+    </div>
 </div>

@@ -9,9 +9,10 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileService } from './services/profile.service';
 import { ModalService } from '../communication/services/modal.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @NgModule({
-  providers: [ProfileService, ModalService],
+  providers: [ProfileService, ModalService, SnackbarService],
   declarations: [ProfileComponent],
   imports: [
     CommonModule,

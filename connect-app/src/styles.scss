@@ -28,3 +28,9 @@ app-root {
   display: block;
   height: 100%;
 }
+
+.cdk-overlay-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

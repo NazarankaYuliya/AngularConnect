@@ -8,6 +8,7 @@ import * as MessagesActions from 'src/app/store/personMessages/messages.actions'
 import * as MessagesSelectors from 'src/app/store/personMessages/messages.selectors';
 import { ConversationService } from '../../services/conversation.service';
 import { ModalService } from '../../services/modal.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-person-conversation',
@@ -27,7 +28,8 @@ export class PersonConversationComponent implements OnInit {
     private router: Router,
     private modalService: ModalService,
     private store: Store,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackbar: SnackbarService
   ) {
     this.newMessageForm = this.fb.group({
       newMessage: ['', [Validators.required]],
@@ -104,6 +106,7 @@ export class PersonConversationComponent implements OnInit {
               ConversationActions.removeConversation({ conversationId })
             );
             this.router.navigate(['/']);
+            this.snackbar.openSnackBar('Conversation deleted');
           });
       }
     });

@@ -15,21 +15,17 @@
   align-items: center;
 }
 
-.profile-link,
 .theme-btn {
   padding: 10px;
-  margin-right: 10px;
   color: #000000;
   font-size: 16px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border: none;
-  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-.profile-link:hover,
 .theme-btn:hover {
   background-color: #626262;
   color: #ffffff;
@@ -40,14 +36,12 @@
 }
 
 :host-context(.dark) {
-  .profile-link,
   .theme-btn {
     background-color: #626262;
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
     color: #f2f2f2;
   }
 
-  .profile-link:hover,
   .theme-btn:hover {
     background-color: #474747;
     color: #ffffff;
