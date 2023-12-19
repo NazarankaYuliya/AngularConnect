@@ -3,7 +3,7 @@
         <h1>AngularConnect</h1>
         <div>
             <button class="theme-btn" (click)="toggleTheme()">Switch theme</button>
-            <a [routerLink]="['/user/profile']" class="profile-link">My profile </a>
+            <a *ngIf='isAuthenticatedUser' [routerLink]="['/user/profile']" class="profile-link">My profile </a>
         </div>
     </header>
 
