@@ -51,8 +51,16 @@ export class PersonConversationComponent implements OnInit {
   }
 
   sendMessage(conversationId: string) {
+    const newMessageText: string = this.newMessageForm.value.newMessage;
+
+    const newMessage = {
+      createdAt: new Date().getTime().toString(),
+      authorID: this.userId || '',
+      message: newMessageText,
+    };
+
     this.conversationService
-      .addMessage(conversationId, this.newMessageForm.value.newMessage)
+      .addMessage(conversationId, newMessageText)
       .subscribe(() => {
         this.store.dispatch(
           MessagesActions.loadConversationMessages({

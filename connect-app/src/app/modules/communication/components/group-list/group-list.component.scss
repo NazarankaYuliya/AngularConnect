@@ -4,8 +4,12 @@
   justify-content: space-between;
   padding: 15px;
   height: 100%;
-  background-color: #f2f2f2;
+  background-color: #fff;
   overflow: scroll;
+}
+
+.list-title {
+  text-align: right;
 }
 
 .groups-list {
@@ -15,7 +19,6 @@
   padding: 10px;
   height: 90%;
   overflow: scroll;
-  background-color: #fff;
 }
 
 .group-block {
@@ -34,12 +37,16 @@
 .btns-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 10px;
+  padding: 10px;
 }
 
 .btn {
-  padding: 5px;
+  padding: 10px;
+  background-color: #d1cfcf;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
   cursor: pointer;
 }

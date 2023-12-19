@@ -1,8 +1,8 @@
 <div class="main-wrapper">
     <header class="header">
-
-        <a class="profile-link" routerLink="/user/profile">My profile</a>
         <h1>AngularConnect</h1>
+        <a [routerLink]="['/user/profile']" class="profile-link">My profile </a>
+
     </header>
     <div class="main-container">
         <app-group-list></app-group-list>

@@ -102,6 +102,7 @@ export class GroupListComponent implements OnInit {
       if (result) {
         this.groupService.deleteGroup(groupId).subscribe(() => {
           this.store.dispatch(GroupActions.removeGroup({ groupId }));
+          showSuccessToast('Group deleted', this.snackBar);
         });
       }
     });

@@ -9,6 +9,7 @@ import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import { Profile } from '../../models/profile.model';
 import { ProfileService } from '../../services/profile.service';
+import { ModalService } from 'src/app/modules/communication/services/modal.service';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,8 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private store: Store,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -52,10 +54,18 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.profileService.logout().subscribe(() => {
-      showSuccessToast('You are logged out', this.snackBar);
-      localStorage.clear();
-      this.router.navigate(['/signin']);
+    const dialogRef = this.modalService.confirmationModalOpen(
+      'Are you sure you want to logout?'
+    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.profileService.logout().subscribe(() => {
+          showSuccessToast('You are logged out', this.snackBar);
+          localStorage.clear();
+          this.router.navigate(['/signin']);
+        });
+      }
     });
   }
 
@@ -68,7 +78,6 @@ export class ProfileComponent implements OnInit {
 
   saveProfile() {
     this.toggleEditMode();
-    console.log(this.profileData);
 
     this.profileService
       .updateProfile({ name: this.profileData.name })

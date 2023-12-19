@@ -3,13 +3,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileService } from './services/profile.service';
+import { ModalService } from '../communication/services/modal.service';
 
 @NgModule({
-  providers: [ProfileService],
+  providers: [ProfileService, ModalService],
   declarations: [ProfileComponent],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { ProfileService } from './services/profile.service';
     ]),
     HttpClientModule,
     MatSnackBarModule,
+    MatDialogModule,
     DatePipe,
     FormsModule,
     ReactiveFormsModule,

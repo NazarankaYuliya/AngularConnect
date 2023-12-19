@@ -3,9 +3,13 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 15px;
-  background-color: #f2f2f2;
+  background-color: #fff;
   height: 100%;
   overflow: scroll;
+}
+
+.list-title {
+  text-align: right;
 }
 
 .users-list {
@@ -21,23 +25,30 @@
 .user {
   padding: 10px;
   background-color: #f2f2f2;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .companion {
   padding: 10px;
-  background-color: #98cf98;
+  background-color: #a5cea5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
   cursor: pointer;
 }
 
 .btn-container {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding: 10px;
 }
 
 .btn {
-  padding: 5px;
+  padding: 10px;
+  background-color: #d1cfcf;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
   cursor: pointer;
 }

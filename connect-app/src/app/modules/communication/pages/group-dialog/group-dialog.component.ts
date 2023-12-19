@@ -9,6 +9,8 @@ import * as MessagesSelectors from 'src/app/store/groupMessages/messages.selecto
 
 import { GroupService } from '../../services/group.service';
 import { ModalService } from '../../services/modal.service';
+import { showSuccessToast } from 'src/app/utils/openSnackBar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-group-dialog',
@@ -29,7 +31,8 @@ export class GroupDialogComponent implements OnInit {
     private router: Router,
     private modalService: ModalService,
     private store: Store,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.newMessageForm = this.fb.group({
       newMessage: ['', [Validators.required]],
@@ -52,13 +55,19 @@ export class GroupDialogComponent implements OnInit {
   }
 
   sendMessage(groupId: string) {
-    this.groupService
-      .addMessage(groupId, this.newMessageForm.value.newMessage)
-      .subscribe(() => {
-        this.store.dispatch(MessagesActions.loadMessages({ groupID: groupId }));
+    const newMessageText: string = this.newMessageForm.value.newMessage;
 
+    const newMessage = {
+      createdAt: new Date().getTime().toString(),
+      authorID: this.userId || '',
+      message: newMessageText,
+    };
+    if (groupId) {
+      this.groupService.addMessage(groupId, newMessageText).subscribe(() => {
+        this.store.dispatch(MessagesActions.loadMessages({ groupID: groupId }));
         this.newMessageForm.reset();
       });
+    }
   }
 
   deleteGroup(groupId: string): void {
@@ -71,6 +80,7 @@ export class GroupDialogComponent implements OnInit {
         this.groupService.deleteGroup(groupId).subscribe(() => {
           this.store.dispatch(GroupActions.removeGroup({ groupId }));
           this.router.navigate(['/']);
+          showSuccessToast('Group deleted', this.snackBar);
         });
       }
     });
