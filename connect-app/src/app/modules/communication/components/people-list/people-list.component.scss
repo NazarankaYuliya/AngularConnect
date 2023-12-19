@@ -19,7 +19,6 @@
   padding: 10px;
   height: 90%;
   overflow: scroll;
-  background-color: #fff;
 }
 
 .user {
@@ -55,4 +54,26 @@
 
 .btn:hover {
   background-color: #a7a6a6;
+}
+
+:host-context(.dark) {
+  .people-list-container {
+    background-color: #626262;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  }
+
+  .user {
+    background-color: #292929;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .companion {
+    background-color: #343566;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .btn {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
 }

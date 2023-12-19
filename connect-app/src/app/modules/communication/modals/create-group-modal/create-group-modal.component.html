@@ -2,7 +2,7 @@
     <form [formGroup]="createGroupForm" (ngSubmit)="onSubmit()">
         <h2>Create New Group</h2>
         <div>
-            <label>Name</label>
+            <label>Name: </label>
             <input matInput formControlName="name">
 
             <div *ngIf="createGroupForm.get('name')?.hasError('required') && createGroupForm.get('name')?.touched">

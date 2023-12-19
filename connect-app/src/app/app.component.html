@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<div class="app-wrapper">
+    <header class="header">
+        <h1>AngularConnect</h1>
+        <div>
+            <button class="theme-btn" (click)="toggleTheme()">Switch theme</button>
+            <a [routerLink]="['/user/profile']" class="profile-link">My profile </a>
+        </div>
+    </header>
+
+    <div class="app-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

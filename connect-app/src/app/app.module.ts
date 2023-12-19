@@ -25,6 +25,7 @@ import { UserEffects } from './store/people/people.effects';
 import { userReducer } from './store/people/people.reducer';
 import { SnackbarService } from './services/snackBar.service';
 import { GlobalErrorHandler } from './utils/errorHandler';
+import { ThemeService } from './services/theme.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -54,6 +55,7 @@ import { GlobalErrorHandler } from './utils/errorHandler';
   providers: [
     ApiService,
     SnackbarService,
+    ThemeService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
   bootstrap: [AppComponent],

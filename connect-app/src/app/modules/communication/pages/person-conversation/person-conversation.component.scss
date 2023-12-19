@@ -9,6 +9,11 @@
   padding: 20px;
   text-decoration: none;
   color: #000;
+  cursor: pointer;
+}
+
+.back-link:hover {
+  color: #656565;
 }
 
 .btn-container {
@@ -62,6 +67,7 @@
   width: 10%;
   padding: 10px;
   border: none;
+  text-transform: uppercase;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -118,4 +124,56 @@
 
 .send-message-btn:hover {
   background-color: #83a583;
+}
+
+:host-context(.dark) {
+  .conversation-dialog-container {
+    background-color: #626262;
+  }
+
+  .messages-container {
+    border-bottom: 1px solid #f2f2f2;
+  }
+
+  .own-message {
+    background-color: #343566;
+    color: #f2f2f2;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .other-message {
+    background-color: #292929;
+    color: #f2f2f2;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .message-date,
+  .message-author {
+    color: #ababab;
+  }
+
+  .message-input:focus {
+    outline-color: #343566;
+  }
+
+  .back-link {
+    color: #f2f2f2;
+  }
+
+  .back-link:hover {
+    color: #656565;
+  }
+
+  .btn {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .send-message-btn {
+    background-color: #343566;
+    color: #f2f2f2;
+  }
+
+  .send-message-btn:hover {
+    background-color: #1f204c;
+  }
 }

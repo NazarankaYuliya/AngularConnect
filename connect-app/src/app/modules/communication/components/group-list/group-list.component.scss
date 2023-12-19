@@ -58,3 +58,22 @@
 .delete-btn:hover {
   background-color: #cd6767;
 }
+
+:host-context(.dark) {
+  .group-list-container {
+    background-color: #626262;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+  }
+
+  .group-block {
+    background-color: #292929;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+  .group {
+    color: #fff;
+  }
+
+  .btn {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+}

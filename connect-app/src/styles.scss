@@ -12,7 +12,16 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body.light {
   background-color: #f2f2f2;
+  color: #000;
+}
+
+body.dark {
+  background-color: #292929;
+  color: #fff;
 }
 
 app-root {

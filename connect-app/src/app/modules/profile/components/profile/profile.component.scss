@@ -29,6 +29,10 @@
   cursor: pointer;
 }
 
+.back-link:hover {
+  color: #656565;
+}
+
 .profile-data {
   width: 400px;
   margin: 0 auto;
@@ -78,9 +82,28 @@ input:focus {
   outline-color: #a5cea5;
 }
 
-span {
-}
-
 p {
   color: #656565;
+}
+
+:host-context(.dark) {
+  .profile-container {
+    background-color: #626262;
+  }
+
+  p {
+    color: #f2f2f2;
+  }
+
+  .back-link {
+    color: #f2f2f2;
+  }
+
+  .back-link:hover {
+    color: #ffffff;
+  }
+
+  .btn {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
 }
