@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 import * as ProfileActions from 'src/app/store/profile/profile.actions';
 import { selectProfile } from 'src/app/store/profile/profile.selectors';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import { Profile } from '../../models/profile.model';
 import { ProfileService } from '../../services/profile.service';
 import { ModalService } from 'src/app/modules/communication/services/modal.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-profile',
@@ -38,7 +37,7 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private store: Store,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
     private modalService: ModalService
   ) {}
 
@@ -61,7 +60,7 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.profileService.logout().subscribe(() => {
-          showSuccessToast('You are logged out', this.snackBar);
+          this.snackbarService.openSnackBar('You are logged out');
           localStorage.clear();
           this.router.navigate(['/signin']);
         });
@@ -82,7 +81,7 @@ export class ProfileComponent implements OnInit {
     this.profileService
       .updateProfile({ name: this.profileData.name })
       .subscribe(() => {
-        showSuccessToast('Profile updated successfully', this.snackBar);
+        this.snackbarService.openSnackBar('Profile updated successfully');
         this.store.dispatch(
           ProfileActions.updateProfile({ profile: this.profileData })
         );

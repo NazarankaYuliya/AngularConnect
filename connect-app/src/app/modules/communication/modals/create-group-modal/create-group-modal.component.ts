@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { GroupService } from '../../services/group.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-create-group-modal',
@@ -12,7 +14,8 @@ export class CreateGroupModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CreateGroupModalComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private groupService: GroupService
   ) {
     this.createGroupForm = this.fb.group({
       name: [
@@ -30,7 +33,17 @@ export class CreateGroupModalComponent {
     if (this.createGroupForm.invalid) {
       return;
     }
-    this.dialogRef.close({ submitted: true, data: this.createGroupForm.value });
+
+    this.groupService
+      .createGroup(this.createGroupForm.value)
+      .subscribe((res) => {
+        if (res) {
+          this.dialogRef.close({
+            submitted: true,
+            data: { name: this.createGroupForm.value, groupID: res.groupID },
+          });
+        }
+      });
   }
 
   onClose(): void {

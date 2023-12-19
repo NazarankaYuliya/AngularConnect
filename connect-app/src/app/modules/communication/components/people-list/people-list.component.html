@@ -1,9 +1,9 @@
 <div class="people-list-container">
     <h1 class="list-title">Users</h1>
     <div class="btn-container">
-        <button class="btn" (click)="updateLists()">
+        <button class="btn" (click)="updateLists()" [disabled]="updateCountdown > 0">
             Update
-            <span *ngIf="updateCountdown$ | async as countdown"> ({{ countdown }}s)</span>
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
         </button>
     </div>
 

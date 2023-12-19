@@ -13,8 +13,6 @@ export class ModalService {
     message: string
   ): MatDialogRef<ConfirmationComponent, boolean> {
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      width: '400px',
-      height: '200px',
       disableClose: true,
       data: { message },
     });
@@ -23,8 +21,6 @@ export class ModalService {
 
   creationModalOpen<T>(component: Type<T>, data?: any): MatDialogRef<T, any> {
     const dialogRef = this.dialog.open(component, {
-      width: '400px',
-      height: '400px',
       disableClose: true,
       data,
     });

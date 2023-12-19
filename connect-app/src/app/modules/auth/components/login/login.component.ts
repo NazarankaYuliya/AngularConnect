@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginData } from 'src/app/modules/auth/models/models';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import { AuthService } from '../../services/auth.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,7 +31,7 @@ export class LoginComponent {
       const loginData: LoginData = this.loginForm.value;
 
       this.authService.login(loginData).subscribe(() => {
-        showSuccessToast('You are logged in', this.snackBar);
+        this.snackbarService.openSnackBar('You are logged in');
         this.router.navigate(['/']);
       });
     }

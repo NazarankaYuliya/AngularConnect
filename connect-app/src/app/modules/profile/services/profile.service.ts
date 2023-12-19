@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RequestBody } from 'src/app/api.models';
-import { ApiService } from 'src/app/api.service';
-import { handleProfileError } from 'src/app/utils/errorHandlers/profileErrorHandler';
+import { ApiService } from 'src/app/services/api.service';
 
 import { ProfileResponse } from '../models/profile.model';
 
@@ -14,12 +12,10 @@ export class ProfileService {
   private endpoint = 'profile';
   private logoutEndpoint = 'logout';
 
-  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+  constructor(private apiService: ApiService) {}
 
   getProfile(): Observable<ProfileResponse> {
-    return this.apiService
-      .get<ProfileResponse>(`${this.endpoint}`)
-      .pipe(catchError((error) => handleProfileError(error, this.snackBar)));
+    return this.apiService.get<ProfileResponse>(`${this.endpoint}`);
   }
 
   updateProfile(data: RequestBody): Observable<void> {

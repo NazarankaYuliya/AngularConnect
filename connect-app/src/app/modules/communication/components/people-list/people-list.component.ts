@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { combineLatest, map, Observable, take, timer } from 'rxjs';
 import * as ConversationActions from 'src/app/store/conversation/conversation.actions';
 import * as ConversationSelectors from 'src/app/store/conversation/conversation.selectors';
 import * as UserActions from 'src/app/store/people/people.actions';
 import * as UserSelectors from 'src/app/store/people/people.selectors';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import {
   ConversationListItem,
@@ -17,6 +15,7 @@ import {
 import { ConversationService } from '../../services/conversation.service';
 import { PeopleService } from '../../services/people.service';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-people-list',
@@ -27,7 +26,7 @@ export class PeopleListComponent implements OnInit {
   conversationList$?: Observable<ConversationListItem[]>;
   companions: string[] = [];
   people$?: Observable<User[]>;
-  updateCountdown$?: Observable<number>;
+  updateCountdown = 0;
   userId = localStorage.getItem('uid');
 
   constructor(
@@ -35,7 +34,7 @@ export class PeopleListComponent implements OnInit {
     private peopleService: PeopleService,
     private conversationService: ConversationService,
     private store: Store,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -61,41 +60,38 @@ export class PeopleListComponent implements OnInit {
   }
 
   updateConversationList() {
-    this.conversationService.getConversationsList().subscribe(
-      (response) => {
-        const conversations = response.Items;
-        this.store.dispatch(
-          ConversationActions.loadConversationsSuccess({ conversations })
-        );
-      },
-      (error) => {
-        console.error('Error fetching conversations from the server:', error);
-      }
-    );
+    this.conversationService.getConversationsList().subscribe((response) => {
+      const conversations = response.Items;
+      this.store.dispatch(
+        ConversationActions.loadConversationsSuccess({ conversations })
+      );
+    });
   }
 
   updateUsersList() {
-    this.peopleService.getPeopleList().subscribe(
-      (response: PeopleListResponse) => {
+    this.peopleService
+      .getPeopleList()
+      .subscribe((response: PeopleListResponse) => {
         const users = response.Items.map((item: PeopleListItem) => ({
           uid: item.uid.S,
           name: item.name.S,
         }));
         this.store.dispatch(UserActions.loadUsersSuccess({ users }));
-      },
-      (error) => {
-        console.error('Error fetching users from the server:', error);
-      }
-    );
+      });
   }
 
   updateLists(): void {
-    this.updateCountdown$ = timer(0, 1000).pipe(
-      take(60),
-      map((value) => 60 - value)
-    );
+    if (this.updateCountdown === 0) {
+      this.updateConversationList(), this.updateUsersList();
 
-    combineLatest([this.updateConversationList(), this.updateUsersList()]);
+      this.updateCountdown = 60;
+      const countdownInterval = setInterval(() => {
+        this.updateCountdown -= 1;
+        if (this.updateCountdown === 0) {
+          clearInterval(countdownInterval);
+        }
+      }, 1000);
+    }
   }
 
   createConversation(companionId: string) {
@@ -123,7 +119,7 @@ export class PeopleListComponent implements OnInit {
               })
             );
             this.router.navigate(['/conversation', res.conversationID]);
-            showSuccessToast('Conversation created', this.snackBar);
+            this.snackbarService.openSnackBar('Conversation created');
           });
       }
     });

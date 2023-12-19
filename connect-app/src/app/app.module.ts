@@ -1,12 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { ApiService } from './api.service';
+import { ApiService } from './services/api.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
@@ -23,6 +23,8 @@ import {
 } from './store';
 import { UserEffects } from './store/people/people.effects';
 import { userReducer } from './store/people/people.reducer';
+import { SnackbarService } from './services/snackBar.service';
+import { GlobalErrorHandler } from './utils/errorHandler';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,7 +51,11 @@ import { userReducer } from './store/people/people.reducer';
       ConversationMessagesEffects,
     ]),
   ],
-  providers: [ApiService],
+  providers: [
+    ApiService,
+    SnackbarService,
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

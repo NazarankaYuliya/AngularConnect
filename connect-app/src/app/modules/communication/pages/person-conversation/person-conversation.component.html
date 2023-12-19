@@ -1,31 +1,33 @@
-<div>
-    <a [routerLink]="['/']">Back to Primary Page</a>
-</div>
-
-<div>
-    <button *ngIf="conversationId" (click)="updateConversationMessages(conversationId)"
-        [disabled]="updateCountdown > 0">Update
-        <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
-    </button>
+<div class="dialog-wrapper" *ngIf="conversationId">
     <div>
-        <button *ngIf="conversationId" (click)="deleteConversation(conversationId)">Delete Conversation</button>
+        <a class="back-link" [routerLink]="['/']">&#60; Back</a>
     </div>
 
-</div>
+    <div class="btn-container">
+        <button class="btn" (click)="updateConversationMessages(conversationId)" [disabled]="updateCountdown > 0">Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+        </button>
 
-<div *ngFor="let message of messages$ |async">
-    <div [ngClass]="{'own-message': message.authorID === userId, 'other-message': message.authorID !== userId}">
-        <p>{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
-        <p>{{message.authorName}}</p>
-        <p>{{message.message}}</p>
+        <button class="btn" (click)="deleteConversation(conversationId)">Delete Conversation</button>
     </div>
 
+    <div class="conversation-dialog-container">
+        <div class="messages-container">
+            <div *ngFor="let message of messages$ |async">
+                <div
+                    [ngClass]="{'own-message': message.authorID === userId, 'other-message': message.authorID !== userId}">
+                    <p class="message-date">{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
+                    <p class="message-author">{{message.authorName}}</p>
+                    <p class="message-text">{{message.message}}</p>
+                </div>
+            </div>
+        </div>
 
+        <div class="form-container" [formGroup]="newMessageForm">
+            <input class="message-input" type="text" placeholder="Type your message..." formControlName="newMessage">
+            <button class="btn send-message-btn" [disabled]="newMessageForm.invalid"
+                (click)="sendMessage(conversationId)">Send</button>
+        </div>
+    </div>
 
-</div>
-
-<div [formGroup]="newMessageForm">
-    <input type="text" placeholder="Type your message..." formControlName="newMessage">
-    <button *ngIf="conversationId" [disabled]="newMessageForm.invalid"
-        (click)="sendMessage(conversationId)">Send</button>
 </div>

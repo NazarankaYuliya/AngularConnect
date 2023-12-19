@@ -1,7 +1,12 @@
+.profile-wrapper {
+  height: 100%;
+  padding: 50px;
+}
+
 .profile-container {
   width: 800px;
-  min-height: 250px;
-  margin: 45px auto;
+  min-height: 400px;
+  margin: 0 auto;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -55,7 +60,13 @@
   cursor: pointer;
 }
 
+.edit-btn {
+  width: 50%;
+  margin: 0 auto;
+}
+
 input {
+  font-size: 14px;
   padding: 10px;
   border: none;
   background-color: #f2f2f2;

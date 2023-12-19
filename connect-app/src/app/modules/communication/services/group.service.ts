@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, Observable } from 'rxjs';
-import {
-  handleGroupCreateError,
-  handleGroupDeleteError,
-  handleGroupLoadError,
-} from 'src/app/utils/errorHandlers/groupsErrorHandler';
+import { Observable } from 'rxjs';
 
-import { ApiService } from '../../../api.service';
+import { ApiService } from '../../../services/api.service';
 import { CreateGroupResponce, GroupListResponce } from '../models/group.models';
 import { MessagesResponse } from '../models/messages.models';
 
@@ -17,7 +11,7 @@ import { MessagesResponse } from '../models/messages.models';
 export class GroupService {
   private endpoint = 'groups';
 
-  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+  constructor(private apiService: ApiService) {}
 
   setCreatorId(creatorId: string): void {
     localStorage.setItem('groupCreatorId', creatorId);
@@ -28,26 +22,21 @@ export class GroupService {
   }
 
   getGroupList(): Observable<GroupListResponce> {
-    return this.apiService
-      .get<GroupListResponce>(`${this.endpoint}/list`)
-      .pipe(catchError((error) => handleGroupLoadError(error, this.snackBar)));
+    return this.apiService.get<GroupListResponce>(`${this.endpoint}/list`);
   }
 
   createGroup(name: string): Observable<CreateGroupResponce> {
     const body = { name };
-    return this.apiService
-      .post<CreateGroupResponce>(`${this.endpoint}/create`, body)
-      .pipe(
-        catchError((error) => handleGroupCreateError(error, this.snackBar))
-      );
+    return this.apiService.post<CreateGroupResponce>(
+      `${this.endpoint}/create`,
+      body
+    );
   }
 
   deleteGroup(groupId: string): Observable<void> {
-    return this.apiService
-      .delete<void>(`${this.endpoint}/delete?groupID=${groupId}`)
-      .pipe(
-        catchError((error) => handleGroupDeleteError(error, this.snackBar))
-      );
+    return this.apiService.delete<void>(
+      `${this.endpoint}/delete?groupID=${groupId}`
+    );
   }
 
   getGroupMessages(

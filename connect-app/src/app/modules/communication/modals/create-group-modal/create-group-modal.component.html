@@ -1,22 +1,26 @@
-<form [formGroup]="createGroupForm" (ngSubmit)="onSubmit()">
-    <h2>Create New Group</h2>
-    <div>
-        <label>Name</label>
-        <input matInput formControlName="name">
+<div class="modal-container">
+    <form [formGroup]="createGroupForm" (ngSubmit)="onSubmit()">
+        <h2>Create New Group</h2>
+        <div>
+            <label>Name</label>
+            <input matInput formControlName="name">
 
-        <div *ngIf="createGroupForm.get('name')?.hasError('required') && createGroupForm.get('name')?.touched">
-            Name is required.
+            <div *ngIf="createGroupForm.get('name')?.hasError('required') && createGroupForm.get('name')?.touched">
+                Name is required.
+            </div>
+            <div *ngIf="createGroupForm.get('name')?.hasError('maxlength') && createGroupForm.get('name')?.touched">
+                Name should be less than 30 characters.
+            </div>
+            <div *ngIf="createGroupForm.get('name')?.hasError('pattern') && createGroupForm.get('name')?.touched">
+                Name should contain only letters, numbers, and spaces.
+            </div>
         </div>
-        <div *ngIf="createGroupForm.get('name')?.hasError('maxlength') && createGroupForm.get('name')?.touched">
-            Name should be less than 30 characters.
+
+        <div class="btns-container">
+            <button type="button" (click)="onClose()">Close</button>
+            <button type="submit" [disabled]="createGroupForm.invalid">Create</button>
         </div>
-        <div *ngIf="createGroupForm.get('name')?.hasError('pattern') && createGroupForm.get('name')?.touched">
-            Name should contain only letters, numbers, and spaces.
-        </div>
-    </div>
 
 
-    <button type="button" (click)="onClose()">Close</button>
-    <button type="submit" [disabled]="createGroupForm.invalid">Create</button>
-
-</form>
+    </form>
+</div>

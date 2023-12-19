@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as GroupActions from 'src/app/store/group/group.actions';
 import * as GroupSelectors from 'src/app/store/group/group.selectors';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
 
 import { CreateGroupModalComponent } from '../../modals/create-group-modal/create-group-modal.component';
 import { Group, GroupListResponce } from '../../models/group.models';
 import { GroupService } from '../../services/group.service';
 import { ModalService } from '../../services/modal.service';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-group-list',
@@ -25,7 +24,7 @@ export class GroupListComponent implements OnInit {
     private store: Store,
     private groupService: GroupService,
     private modalService: ModalService,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -39,8 +38,9 @@ export class GroupListComponent implements OnInit {
 
   updateList(): void {
     if (this.updateCountdown === 0) {
-      this.groupService.getGroupList().subscribe(
-        (response: GroupListResponce) => {
+      this.groupService
+        .getGroupList()
+        .subscribe((response: GroupListResponce) => {
           const groups = response.Items.map((item) => ({
             id: item.id.S,
             name: item.name.S,
@@ -49,12 +49,7 @@ export class GroupListComponent implements OnInit {
           }));
 
           this.store.dispatch(GroupActions.loadGroupsSuccess({ groups }));
-        },
-        (error) => {
-          console.error('Error fetching groups from the server:', error);
-          this.store.dispatch(GroupActions.loadGroupsFailure());
-        }
-      );
+        });
 
       this.updateCountdown = 60;
       const countdownInterval = setInterval(() => {
@@ -74,21 +69,20 @@ export class GroupListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.data) {
         const groupName = result.data.name;
+        const groupID = result.data.groupID;
 
-        this.groupService.createGroup(groupName).subscribe((res) => {
-          showSuccessToast('Group created', this.snackBar);
+        this.snackbarService.openSnackBar('Group created');
 
-          this.store.dispatch(
-            GroupActions.addGroup({
-              group: {
-                id: res.groupID,
-                name: groupName,
-                createdAt: '',
-                createdBy: this.userId,
-              },
-            })
-          );
-        });
+        this.store.dispatch(
+          GroupActions.addGroup({
+            group: {
+              id: groupID,
+              name: groupName,
+              createdAt: '',
+              createdBy: this.userId,
+            },
+          })
+        );
       }
     });
   }
@@ -102,7 +96,7 @@ export class GroupListComponent implements OnInit {
       if (result) {
         this.groupService.deleteGroup(groupId).subscribe(() => {
           this.store.dispatch(GroupActions.removeGroup({ groupId }));
-          showSuccessToast('Group deleted', this.snackBar);
+          this.snackbarService.openSnackBar('Group deleted');
         });
       }
     });

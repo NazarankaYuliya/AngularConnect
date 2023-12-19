@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 
-import { ApiService } from '../../../api.service';
+import { ApiService } from '../../../services/api.service';
 import { MessagesResponse } from '../models/messages.models';
-import { handleGroupDeleteError } from 'src/app/utils/errorHandlers/groupsErrorHandler';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ConversationService {
   private endpoint = 'conversations';
 
-  constructor(private apiService: ApiService, private snackBar: MatSnackBar) {}
+  constructor(private apiService: ApiService) {}
 
   getConversationsList(): Observable<any> {
     return this.apiService.get<any>(`${this.endpoint}/list`);
@@ -38,10 +36,8 @@ export class ConversationService {
   }
 
   deleteConversation(conversationID: string): Observable<void> {
-    return this.apiService
-      .delete<void>(`${this.endpoint}/delete?conversationID=${conversationID}`)
-      .pipe(
-        catchError((error) => handleGroupDeleteError(error, this.snackBar))
-      );
+    return this.apiService.delete<void>(
+      `${this.endpoint}/delete?conversationID=${conversationID}`
+    );
   }
 }

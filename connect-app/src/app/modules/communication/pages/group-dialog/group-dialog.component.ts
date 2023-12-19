@@ -9,8 +9,7 @@ import * as MessagesSelectors from 'src/app/store/groupMessages/messages.selecto
 
 import { GroupService } from '../../services/group.service';
 import { ModalService } from '../../services/modal.service';
-import { showSuccessToast } from 'src/app/utils/openSnackBar';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackBar.service';
 
 @Component({
   selector: 'app-group-dialog',
@@ -32,7 +31,7 @@ export class GroupDialogComponent implements OnInit {
     private modalService: ModalService,
     private store: Store,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {
     this.newMessageForm = this.fb.group({
       newMessage: ['', [Validators.required]],
@@ -80,7 +79,7 @@ export class GroupDialogComponent implements OnInit {
         this.groupService.deleteGroup(groupId).subscribe(() => {
           this.store.dispatch(GroupActions.removeGroup({ groupId }));
           this.router.navigate(['/']);
-          showSuccessToast('Group deleted', this.snackBar);
+          this.snackbarService.openSnackBar('Group deleted');
         });
       }
     });
