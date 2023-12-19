@@ -1,0 +1,23 @@
+<div class="people-list-container">
+    <h1 class="list-title">Users</h1>
+    <div class="btn-container">
+        <button class="btn" (click)="updateLists()" [disabled]="updateCountdown > 0">
+            Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+        </button>
+    </div>
+
+    <div class="users-list">
+        <div *ngFor="let user of people$ |async">
+            <div [ngClass]="{
+                'companion': companions.includes(user.uid),
+                'user': !companions.includes(user.uid)
+                }" (click)="createConversation(user.uid)">
+
+                {{ user.name | uppercase}}
+
+            </div>
+        </div>
+    </div>
+
+</div>

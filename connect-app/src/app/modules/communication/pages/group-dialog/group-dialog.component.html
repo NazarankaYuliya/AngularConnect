@@ -1,0 +1,37 @@
+<div class="dialog-wrapper" *ngIf="groupId">
+    <div>
+        <a class="back-link" [routerLink]="['/']">&#60; Back</a>
+    </div>
+
+
+    <div class="btn-container">
+        <button class="btn" (click)="updateGroupMessages(groupId)" [disabled]="updateCountdown > 0">Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+        </button>
+
+        <button class="btn" *ngIf="creatorId === userId" (click)="deleteGroup(groupId)">Delete Group</button>
+
+
+    </div>
+
+    <div class="group-dialog-container">
+        <div class="messages-container">
+            <div class="message" *ngFor="let message of messages$ |async">
+                <div
+                    [ngClass]="{'own-message ': message.authorID === userId, ' other-message': message.authorID !== userId}">
+                    <p class="message-date">{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
+                    <p class="message-author">{{message.authorName}}</p>
+                    <p class="message-text">{{message.message}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container" [formGroup]="newMessageForm">
+            <input class="message-input" type="text" placeholder="Type your message..." formControlName="newMessage">
+            <button class="btn send-message-btn" [disabled]="newMessageForm.invalid"
+                (click)="sendMessage(groupId)">Send</button>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,179 @@
+.dialog-wrapper {
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.back-link {
+  padding: 20px;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.back-link:hover {
+  color: #656565;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.conversation-dialog-container {
+  width: 800px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.messages-container {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  overflow: scroll;
+  border-bottom: 1px solid #656565;
+}
+
+.form-container {
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.message-input {
+  width: 50%;
+  padding: 10px;
+  border: none;
+  background-color: #f2f2f2;
+  cursor: text;
+}
+
+.message-input:focus {
+  outline-color: #a5cea5;
+}
+
+.btn {
+  width: 10%;
+  padding: 10px;
+  border: none;
+  text-transform: uppercase;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c5c5c5;
+}
+
+.own-message,
+.other-message {
+  position: relative;
+  max-width: 70%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: #000;
+  padding: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.own-message {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  background-color: #a5cea5;
+}
+
+.other-message {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background-color: #f2f2f2;
+}
+
+.message-date {
+  font-size: 12px;
+  color: #656565;
+}
+
+.message-author {
+  font-size: 14px;
+  color: #656565;
+}
+
+.message-text {
+  font-size: 16px;
+}
+
+.send-message-btn {
+  background-color: #a5cea5;
+}
+
+.send-message-btn:hover {
+  background-color: #83a583;
+}
+
+:host-context(.dark) {
+  .conversation-dialog-container {
+    background-color: #626262;
+  }
+
+  .messages-container {
+    border-bottom: 1px solid #f2f2f2;
+  }
+
+  .own-message {
+    background-color: #343566;
+    color: #f2f2f2;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .other-message {
+    background-color: #292929;
+    color: #f2f2f2;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .message-date,
+  .message-author {
+    color: #ababab;
+  }
+
+  .message-input:focus {
+    outline-color: #343566;
+  }
+
+  .back-link {
+    color: #f2f2f2;
+  }
+
+  .back-link:hover {
+    color: #656565;
+  }
+
+  .btn {
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  }
+
+  .send-message-btn {
+    background-color: #343566;
+    color: #f2f2f2;
+  }
+
+  .send-message-btn:hover {
+    background-color: #1f204c;
+  }
+}

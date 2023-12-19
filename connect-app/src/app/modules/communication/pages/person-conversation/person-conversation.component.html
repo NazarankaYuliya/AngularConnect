@@ -1,0 +1,33 @@
+<div class="dialog-wrapper" *ngIf="conversationId">
+    <div>
+        <a class="back-link" [routerLink]="['/']">&#60; Back</a>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" (click)="updateConversationMessages(conversationId)" [disabled]="updateCountdown > 0">Update
+            <span *ngIf="updateCountdown > 0"> ({{ updateCountdown }}s)</span>
+        </button>
+
+        <button class="btn" (click)="deleteConversation(conversationId)">Delete Chat</button>
+    </div>
+
+    <div class="conversation-dialog-container">
+        <div class="messages-container">
+            <div *ngFor="let message of messages$ |async">
+                <div
+                    [ngClass]="{'own-message': message.authorID === userId, 'other-message': message.authorID !== userId}">
+                    <p class="message-date">{{message.createdAt | date:'dd.MM.yy HH:mm'}}</p>
+                    <p class="message-author">{{message.authorName}}</p>
+                    <p class="message-text">{{message.message}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container" [formGroup]="newMessageForm">
+            <input class="message-input" type="text" placeholder="Type your message..." formControlName="newMessage">
+            <button class="btn send-message-btn" [disabled]="newMessageForm.invalid"
+                (click)="sendMessage(conversationId)">Send</button>
+        </div>
+    </div>
+
+</div>

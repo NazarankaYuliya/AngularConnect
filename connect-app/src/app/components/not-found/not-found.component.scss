@@ -1,0 +1,15 @@
+.container {
+  width: 400px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  background-color: #909090;
+  padding: 10px;
+}
