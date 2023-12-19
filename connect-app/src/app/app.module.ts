@@ -26,9 +26,10 @@ import { userReducer } from './store/people/people.reducer';
 import { SnackbarService } from './services/snackBar.service';
 import { GlobalErrorHandler } from './utils/errorHandler';
 import { ThemeService } from './services/theme.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
