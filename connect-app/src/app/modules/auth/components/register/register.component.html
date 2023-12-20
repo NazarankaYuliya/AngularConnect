@@ -41,7 +41,19 @@
             </div>
         </div>
 
+        <div class="submit-container">
+            <div class="signin-link">
+                <p>Already have an account?</p>
+                <a [routerLink]="['/signin']">Sign in</a>
+            </div>
 
-        <button type="submit" class="register-button" [disabled]="!registrationForm.valid">Register</button>
+
+
+
+            <button type="submit" class="register-button" [disabled]="!registrationForm.valid">Register</button>
+
+
+        </div>
+
     </form>
 </div>

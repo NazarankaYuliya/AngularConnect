@@ -42,6 +42,23 @@
   font-family: Roboto;
 }
 
+.submit-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signin-link {
+  display: flex;
+  gap: 10px;
+
+  p,
+  a {
+    font-size: 14px;
+    color: #000;
+  }
+}
+
 .register-button {
   padding: 10px;
   color: #000;

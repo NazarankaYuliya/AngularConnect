@@ -18,7 +18,7 @@ import { SnackbarService } from 'src/app/services/snackBar.service';
     CommonModule,
     RouterModule.forChild([
       {
-        path: 'profile',
+        path: '',
         component: ProfileComponent,
       },
     ]),

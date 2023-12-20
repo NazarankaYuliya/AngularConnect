@@ -61,6 +61,23 @@
   background-color: #83a583;
 }
 
+.submit-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-link {
+  display: flex;
+  gap: 10px;
+
+  p,
+  a {
+    font-size: 14px;
+    color: #000;
+  }
+}
+
 .error-message {
   color: rgb(136, 42, 42);
   font-size: 12px;
