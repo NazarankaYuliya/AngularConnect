@@ -8,7 +8,7 @@ import { RequestBody } from '../api.models';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://tasks.app.rs.school/angular/';
+  private baseUrl = 'https://angularconnectbackend.onrender.com';
 
   constructor(private http: HttpClient) {}
 
